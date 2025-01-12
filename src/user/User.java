@@ -65,12 +65,18 @@ public class User {
     }
 
     public void showPurchasedGoods() {
-        System.out.println("Purchased goods:");
-        for (Goods goods:
-             getPurchasedGoods()) {
-            System.out.println(goods);
+        double total = 0;
+
+        System.out.printf("%-15s %10s%n", "Goods", "Price");
+        System.out.println("--------------------------");
+
+        for (Goods goods : getPurchasedGoods()) {
+            System.out.printf("%-15s %10.1f%n", goods.getName(), goods.getPrice());
+            total += goods.getPrice();
         }
 
+        System.out.println("--------------------------");
+        System.out.printf("%-15s %10.1f%n", "Total", total);
     }
 
     @Override
