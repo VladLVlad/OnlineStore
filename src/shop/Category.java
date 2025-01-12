@@ -1,10 +1,12 @@
 package shop;
 
+import java.util.List;
+
 public class Category {
     private String name;
-    private Goods[] goods;
+    private List<Goods> goods;
 
-    public Category(String name, Goods[] goods) {
+    public Category(String name, List<Goods> goods) {
         this.name = name;
         this.goods = goods;
     }
@@ -17,11 +19,11 @@ public class Category {
         this.name = name;
     }
 
-    public Goods[] getGoods() {
+    public List<Goods> getGoods() {
         return goods;
     }
 
-    public void setGoods(Goods[] goods) {
+    public void setGoods(List<Goods> goods) {
         this.goods = goods;
     }
 }

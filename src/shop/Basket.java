@@ -4,35 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Basket {
-    private List<Goods> purchasedGoods;
+    private List<Goods> basketGoods;
 
     public Basket() {
-        this.purchasedGoods = new ArrayList<>();
+        this.basketGoods = new ArrayList<>();
     }
 
-    public List<Goods> getPurchasedGoods() {
-        return purchasedGoods;
-    }
-
-    public void setPurchasedGoods(List<Goods> purchasedGoods) {
-        this.purchasedGoods = purchasedGoods;
+    public List<Goods> getBasketGoods() {
+        return basketGoods;
     }
 
     public void addGoods(Goods goods) {
-        this.purchasedGoods.add(goods);
+        this.basketGoods.add(goods);
     }
 
     public void removeGoods(Goods goods) {
-        this.purchasedGoods.remove(goods);
+        this.basketGoods.remove(goods);
     }
 
     @Override
     public String toString() {
-        if (purchasedGoods.isEmpty()) {
+        if (basketGoods.isEmpty()) {
             return "Basket is empty.";
         }
         StringBuilder sb = new StringBuilder("Basket contains:\n");
-        for (Goods g : purchasedGoods) {
+        for (Goods g : basketGoods) {
             sb.append(g).append("\n");
         }
         return sb.toString();

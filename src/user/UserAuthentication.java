@@ -1,16 +1,25 @@
 package user;
 
+import menu.StartWindow;
+import shop.Goods;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static menu.StartWindow.*;
+
 public class UserAuthentication {
     static Scanner scanner = new Scanner(System.in);
 
+    public static User loggedUser = null;
+    public static boolean flag = false;
+    public static List<User> users = new ArrayList<>(List.of(new User("Vlad1234", "qwer1234")));
 
-    static List<User> users = new ArrayList<>(List.of(new User("Vlad1234", "qwer1234")));
 
     public static void signIn() {
+
+
         while (true) {
             System.out.println("Are you registered?");
             System.out.println("1. Yes");
@@ -59,7 +68,10 @@ public class UserAuthentication {
             String password = scanner.nextLine();
 
             if (foundUser.getPassword().equals(password)) {
+                flag = true;
+                loggedUser = foundUser;
                 System.out.println("You are logged in");
+                showStartWindow();
                 return;
             } else {
                 System.out.println("Password is not correct. Please try again.");

@@ -3,10 +3,15 @@ package user;
 import shop.Basket;
 import shop.Goods;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private String login;
     private String password;
     private Basket userBasket;
+
+    private List<Goods> purchasedGoods;
 
     public User(String login, String password) {
         if (login == null || login.trim().isEmpty()) {
@@ -18,6 +23,7 @@ public class User {
         this.login = login;
         this.password = password;
         this.userBasket = new Basket();
+        this.purchasedGoods = new ArrayList<>();
     }
 
     public String getLogin() {
@@ -54,12 +60,22 @@ public class User {
         System.out.println(userBasket);
     }
 
+    public List<Goods> getPurchasedGoods() {
+        return purchasedGoods;
+    }
+
+    public void showPurchasedGoods() {
+        System.out.println("Purchased goods:");
+        for (Goods goods:
+             getPurchasedGoods()) {
+            System.out.println(goods);
+        }
+
+    }
+
     @Override
     public String toString() {
-        return "User{" +
-                "login='" + login + '\'' +
-                ", password='" + showPassword('*') + '\'' +
-                ", userBasket=" + userBasket +
-                '}';
+        return "login='" + login + '\'' + "\n" +
+                "password='" + showPassword('*') + '\'';
     }
 }
