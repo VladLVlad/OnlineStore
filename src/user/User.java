@@ -3,8 +3,13 @@ package user;
 import shop.Basket;
 import shop.Goods;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class User {
     private String login;
@@ -64,19 +69,34 @@ public class User {
         return purchasedGoods;
     }
 
-    public void showPurchasedGoods() {
+    public void showPurchasedGoods(){
         double total = 0;
 
-        System.out.printf("%-15s %10s%n", "Goods", "Price");
+        Locale locale = Locale.getDefault();
+        ResourceBundle bundle = ResourceBundle.getBundle("report", locale);
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
+
+
+        System.out.printf("%-15s %10s%n",bundle.getString("goods"), bundle.getString("price"));
         System.out.println("--------------------------");
 
         for (Goods goods : getPurchasedGoods()) {
-            System.out.printf("%-15s %10.1f%n", goods.getName(), goods.getPrice());
+
+            String localizedName = bundle.getString(goods.getNameKey());
+            if (Double.isNaN(goods.getPrice()) || Double.isInfinite(goods.getPrice())) {
+                System.err.println("Invalid price: " + goods.getPrice());
+            } else {
+                System.out.printf("%-15s %10s%n", localizedName, currencyFormatter.format(goods.getPrice()));
+            }
             total += goods.getPrice();
         }
 
         System.out.println("--------------------------");
-        System.out.printf("%-15s %10.1f%n", "Total", total);
+        if (Double.isNaN(total) || Double.isInfinite(total)) {
+            System.err.println("Invalid total: " + total);
+        } else {
+            System.out.printf("%-15s %10s%n", bundle.getString("total"), currencyFormatter.format(total));
+        }
     }
 
     @Override
