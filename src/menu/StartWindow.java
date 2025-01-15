@@ -29,6 +29,10 @@ public class StartWindow {
                 scanner.nextLine();
                 switch (answer) {
                     case 1 -> {
+                        if(flag){
+                            System.out.println("You need to log out of your account");
+                            continue;
+                        }
                         signIn();
                         return;
                     }
@@ -158,7 +162,7 @@ public class StartWindow {
 
     private static boolean checkFlag() {
         if (!flag) {
-            System.out.println("You need to login to your account!");
+            System.out.println("You need to log in to your account!");
             return true;
         }
         return false;
