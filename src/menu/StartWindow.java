@@ -1,9 +1,11 @@
 package menu;
 
+import i18n.LocaleConfig;
 import shop.Category;
 import shop.shop_menu.ShopMenu;
 import user.UserAuthentication;
 
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 import static shop.shop_menu.ShopMenu.*;
@@ -53,6 +55,7 @@ public class StartWindow {
                             loggedUser.getPurchasedGoods().add(goods);
                         });
                         loggedUser.getUserBasket().getBasketGoods().removeAll(loggedUser.getPurchasedGoods());
+                        LocaleConfig.dateTime = LocalDateTime.now();
                         System.out.println("The purchase was successful");
                     }
                     case 6 -> {
