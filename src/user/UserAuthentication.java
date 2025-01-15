@@ -1,5 +1,7 @@
 package user;
 
+import exceptions.WrongLoginException;
+import exceptions.WrongPasswordException;
 import menu.StartWindow;
 import shop.Goods;
 
@@ -14,7 +16,15 @@ public class UserAuthentication {
 
     public static User loggedUser = null;
     public static boolean flag = false;
-    public static List<User> users = new ArrayList<>(List.of(new User("Vlad1234", "qwer1234")));
+    public static List<User> users;
+
+    static {
+        try {
+            users = new ArrayList<>(List.of(new User("Vlad1234", "qwer1234")));
+        } catch (WrongLoginException | WrongPasswordException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
     public static void signIn() {
@@ -97,11 +107,15 @@ public class UserAuthentication {
                 System.out.println("You are registered!");
                 signIn();
                 return;
-            } catch (IllegalArgumentException exception) {
-                System.out.println("Error: " + exception.getMessage());
-
+            }catch (WrongLoginException | WrongPasswordException e) {
+                System.out.println("Error: " + e.getMessage());
             }
         }
+    }
+
+    public static boolean isValid(String s) {
+        String regex = "^\\w+$";
+        return s == null || !s.matches(regex);
     }
 }
 
