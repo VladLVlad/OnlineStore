@@ -1,0 +1,14 @@
+Data: 01.15.2025 21:32:16
+
+Goods                Price
+--------------------------
+Cottage cheese       $2.20
+Cheese               $3.10
+Cheese               $3.10
+Sour cream           $3.50
+Buckwheat            $2.50
+Buckwheat            $2.50
+Rise                 $3.20
+Pasta                $4.00
+--------------------------
+Total               $24.10
