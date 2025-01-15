@@ -1,5 +1,7 @@
 package user;
 
+import exceptions.WrongLoginException;
+import exceptions.WrongPasswordException;
 import shop.Basket;
 import shop.Goods;
 
@@ -14,6 +16,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import static i18n.LocaleConfig.*;
+import static user.UserAuthentication.isValid;
 
 public class User {
     private String login;
@@ -22,12 +25,12 @@ public class User {
 
     private List<Goods> purchasedGoods;
 
-    public User(String login, String password) {
-        if (login == null || login.trim().isEmpty()) {
-            throw new IllegalArgumentException("Login cannot be empty.");
+    public User(String login, String password) throws WrongLoginException, WrongPasswordException {
+        if (login.length() > 20 || isValid(login)) {
+            throw new WrongLoginException("Login inputted incorrectly", login);
         }
-        if (password == null || password.length() < 6) {
-            throw new IllegalArgumentException("Password must be at least 6 characters long.");
+        if (password.length() > 20 || isValid(password) || password.length() < 4) {
+            throw new WrongPasswordException("Password inputted incorrectly", password);
         }
         this.login = login;
         this.password = password;
