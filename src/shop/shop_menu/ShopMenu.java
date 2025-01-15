@@ -4,6 +4,7 @@ import shop.Category;
 import shop.Goods;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -23,4 +24,8 @@ public class ShopMenu {
 
     public static List<Category> categories = new ArrayList<>(List.of(milk, grocery));
 
+    public static void sortGoods(){
+        milkGoods.sort(Comparator.comparing(Goods::getPrice));
+        groceryGoods.sort(Comparator.comparing(Goods::getPrice));
+    }
 }
