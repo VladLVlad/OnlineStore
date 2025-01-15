@@ -6,10 +6,14 @@ import shop.Goods;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import static i18n.LocaleConfig.*;
 
 public class User {
     private String login;
@@ -69,15 +73,28 @@ public class User {
         return purchasedGoods;
     }
 
-    public void showPurchasedGoods(){
+    public void showPurchasedGoods() {
+
+        if (getPurchasedGoods().isEmpty()) {
+            System.out.println("No purchases");
+            return;
+        }
+
+        if (dateTime == null) {
+            System.err.println("Invalid date: dateTime is null");
+        } else {
+            String formattedDate;
+            try {
+                formattedDate = dateTime.format(formatter);
+                System.out.printf("%s: %s%n", bundle.getString("data"), formattedDate);
+                System.out.println();
+            } catch (DateTimeException e) {
+                System.err.println("Invalid date format: " + e.getMessage());
+            }
+        }
         double total = 0;
 
-        Locale locale = Locale.getDefault();
-        ResourceBundle bundle = ResourceBundle.getBundle("report", locale);
-        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
-
-
-        System.out.printf("%-15s %10s%n",bundle.getString("goods"), bundle.getString("price"));
+        System.out.printf("%-15s %10s%n", bundle.getString("goods"), bundle.getString("price"));
         System.out.println("--------------------------");
 
         for (Goods goods : getPurchasedGoods()) {

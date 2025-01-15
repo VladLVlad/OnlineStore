@@ -1,9 +1,11 @@
 package menu;
 
+import i18n.LocaleConfig;
 import shop.Category;
 import shop.shop_menu.ShopMenu;
 import user.UserAuthentication;
 
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 import static shop.shop_menu.ShopMenu.*;
@@ -27,6 +29,10 @@ public class StartWindow {
                 scanner.nextLine();
                 switch (answer) {
                     case 1 -> {
+                        if(flag){
+                            System.out.println("You need to log out of your account");
+                            continue;
+                        }
                         signIn();
                         return;
                     }
@@ -53,6 +59,7 @@ public class StartWindow {
                             loggedUser.getPurchasedGoods().add(goods);
                         });
                         loggedUser.getUserBasket().getBasketGoods().removeAll(loggedUser.getPurchasedGoods());
+                        LocaleConfig.dateTime = LocalDateTime.now();
                         System.out.println("The purchase was successful");
                     }
                     case 6 -> {
@@ -155,7 +162,7 @@ public class StartWindow {
 
     private static boolean checkFlag() {
         if (!flag) {
-            System.out.println("You need to login to your account!");
+            System.out.println("You need to log in to your account!");
             return true;
         }
         return false;
