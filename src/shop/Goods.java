@@ -1,6 +1,8 @@
 package shop;
 
-public class Goods {
+import java.io.Serializable;
+
+public class Goods implements Serializable {
 
     private String nameKey;
     private String name;
