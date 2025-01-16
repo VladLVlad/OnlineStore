@@ -2,13 +2,17 @@ package menu;
 
 import i18n.LocaleConfig;
 import shop.Category;
+import shop.Goods;
 import shop.shop_menu.ShopMenu;
+import storage.Serializer;
 import user.UserAuthentication;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Scanner;
 
 import static shop.shop_menu.ShopMenu.*;
+import static storage.Serializer.*;
 import static user.UserAuthentication.*;
 
 public class StartWindow {
@@ -23,7 +27,8 @@ public class StartWindow {
             System.out.println("4. My Basket");
             System.out.println("5. Buy goods from my basket");
             System.out.println("6. Purchased goods");
-            System.out.println("7. Log out of my account");
+            System.out.println("7. Show last purchased basket");
+            System.out.println("8. Log out of my account");
             try {
                 int answer = scanner.nextInt();
                 scanner.nextLine();
@@ -55,6 +60,7 @@ public class StartWindow {
                             System.out.println("Your basket is empty");
                             continue;
                         }
+                        serialize(loggedUser.getUserBasket().getBasketGoods());
                         loggedUser.getUserBasket().getBasketGoods().forEach(goods -> {
                             loggedUser.getPurchasedGoods().add(goods);
                         });
@@ -68,12 +74,54 @@ public class StartWindow {
                     }
                     case 7 -> {
                         if (checkFlag()) continue;
+                        if(loggedUser.getPurchasedGoods().isEmpty()){
+                            System.out.println("You haven't purchased any goods");
+                            continue;
+                        }
+                        List<Goods> latestBasket = deserialize();
+                        StringBuilder sb = new StringBuilder("The latest basket:\n");
+                        for (Goods g : latestBasket) {
+                            sb.append(g).append("\n");
+                        }
+                        System.out.println(sb);
+                        addLatestBasket(latestBasket);
+
+                    }
+                    case 8 -> {
+                        if (checkFlag()) continue;
                         flag = false;
                         loggedUser = null;
                         System.out.println("You are logged out");
 
                     }
-                    default -> System.out.println("Enter numbers from 1 to 7");
+                    default -> System.out.println("Enter numbers from 1 to 8");
+                }
+            } catch (Exception e) {
+                System.out.println("Error: Input must be a number!");
+                scanner.nextLine();
+            }
+        }
+    }
+
+    private static void addLatestBasket(List<Goods> latestBasket) {
+        while (true){
+            System.out.println("1. Add to Basket");
+            System.out.println("2. Back");
+            try {
+                int answer = scanner.nextInt();
+                scanner.nextLine();
+                switch (answer) {
+                    case 1 -> {
+                        loggedUser.getUserBasket().getBasketGoods().addAll(latestBasket);
+                        System.out.println("Goods added to basket!");
+                        return;
+                    }
+                    case 2 -> {
+                        showStartWindow();
+                        return;
+                    }
+
+                    default -> System.out.println("Enter 1 or 2");
                 }
             } catch (Exception e) {
                 System.out.println("Error: Input must be a number!");
