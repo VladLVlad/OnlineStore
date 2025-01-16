@@ -45,22 +45,9 @@ public class User {
         return login;
     }
 
-    public void setLogin(String login) {
-        if (login == null || login.trim().isEmpty()) {
-            throw new IllegalArgumentException("Login cannot be empty.");
-        }
-        this.login = login;
-    }
 
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        if (password == null || password.length() < 6) {
-            throw new IllegalArgumentException("Password must be at least 6 characters long.");
-        }
-        this.password = password;
     }
 
     public Basket getUserBasket() {
@@ -79,7 +66,7 @@ public class User {
         return purchasedGoods;
     }
 
-    public void showPurchasedGoods() throws IOException {
+    public void showPurchasedGoods() {
         if (getPurchasedGoods().isEmpty()) {
             System.out.println("No purchases");
             return;
